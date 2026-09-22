@@ -8,7 +8,7 @@ export default async function handler(req,res){
     const r=await fetch("https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM?output_format=mp3_22050_32",{
       method:"POST",
       headers:{"xi-api-key":key,"Content-Type":"application/json","Accept":"audio/mpeg"},
-      body:JSON.stringify({text,model_id:"eleven_multilingual_v2",voice_settings:{stability:.65,similarity_boost:.75,style:.15,speed:.82}})
+      body:JSON.stringify({text,model_id:"eleven_multilingual_v2",language_code:"id",previous_text:"Latihan membaca bahasa Indonesia.",next_text:"Ucapkan dengan bunyi vokal bahasa Indonesia yang jelas.",seed:12345,voice_settings:{stability:.75,similarity_boost:.75,style:.05,speed:.78}})
     });
     if(!r.ok){const detail=await r.text();return res.status(r.status).json({error:"ElevenLabs error",detail:detail.slice(0,300)})}
     const buf=Buffer.from(await r.arrayBuffer());
