@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0d12"><title>Belajar Membaca</title>
+<link rel="manifest" href="manifest.json">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b0d12;color:#f7f7f8;font-family:system-ui,-apple-system,sans-serif;min-height:100dvh}
+.app{min-height:100dvh;display:flex;flex-direction:column;max-width:620px;margin:auto;padding:18px}
+.top{display:flex;align-items:center;justify-content:space-between}.title{font-weight:800;font-size:20px}.settings{background:#171a22;border:1px solid #2b303b;color:#fff;border-radius:14px;padding:10px 13px}
+.card{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.hint{color:#8f96a3;font-size:14px;margin-bottom:16px}.word{font-size:clamp(72px,22vw,132px);font-weight:900;letter-spacing:.06em;line-height:1}
+.reading{min-height:38px;margin-top:26px;font-size:24px;color:#aeb5c2;font-weight:700}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-bottom:max(14px,env(safe-area-inset-bottom))}
+button{font:inherit;font-weight:800;border:0;cursor:pointer}.next{background:#20242d;color:#fff;border-radius:18px;padding:18px}.speak{background:#fff;color:#090b0f;border-radius:18px;padding:18px}
+.sheet{position:fixed;inset:0;background:#0009;display:none;align-items:flex-end}.sheet.show{display:flex}.panel{width:100%;max-width:620px;margin:auto;background:#151820;border-radius:24px 24px 0 0;padding:22px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:16px 0}select{background:#252a34;color:#fff;border:1px solid #343a46;padding:10px;border-radius:12px;font-size:16px}.close{width:100%;padding:15px;border-radius:14px}
+</style></head>
+<body><main class="app">
+<div class="top"><div class="title">Belajar Membaca</div><button class="settings" id="settings">⚙ Pengaturan</button></div>
+<section class="card"><div class="hint" id="hint">4 huruf</div><div class="word" id="word">BUKU</div><div class="reading" id="reading"></div></section>
+<div class="controls"><button class="next" id="next">↻ Ganti Kata</button><button class="speak" id="speak">🔊 Baca</button></div>
+</main>
+<div class="sheet" id="sheet"><div class="panel"><h2>Pengaturan</h2><div class="row"><label for="length">Jumlah huruf</label><select id="length"><option>3</option><option selected>4</option><option>5</option><option>6</option></select></div><button class="close" id="close">Selesai</button></div></div>
+<script src="app.js"></script></body></html>
