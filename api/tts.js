@@ -18,7 +18,7 @@ export default async function handler(req,res){
     if(!r.ok){const detail=await r.text();return res.status(r.status).json({error:"ElevenLabs error",detail:detail.slice(0,300)})}
     const buf=Buffer.from(await r.arrayBuffer());
     res.setHeader("Content-Type","audio/mpeg");
-    res.setHeader("Cache-Control","public, s-maxage=86400, stale-while-revalidate=604800");
+    res.setHeader("Cache-Control","no-store, no-cache, must-revalidate, max-age=0");\n    res.setHeader("CDN-Cache-Control","no-store");\n    res.setHeader("Vercel-CDN-Cache-Control","no-store");
     return res.status(200).send(buf);
   }catch(e){return res.status(500).json({error:"TTS failed"})}
 }
