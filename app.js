@@ -3,9 +3,9 @@ let len=4,last=-1,speaking=false;
 const $=id=>document.getElementById(id),word=$("word"),reading=$("reading"),hint=$("hint");
 function pool(){return(words[len]||words[4]).filter(w=>w.length===len)}
 function next(){let p=pool(),i;do{i=Math.floor(Math.random()*p.length)}while(p.length>1&&i===last);last=i;word.textContent=p[i];reading.textContent=""}
-const letterSound={A:"a",B:"bé",C:"cé",D:"dé",E:"é",F:"éf",G:"gé",H:"ha",I:"i",J:"jé",K:"ka",L:"él",M:"ém",N:"én",O:"o",P:"pé",Q:"ki",R:"ér",S:"és",T:"té",U:"u",V:"vé",W:"wé",X:"éks",Y:"yé",Z:"zét"};
+const letterSound={A:"a",B:"bé",C:"cé",D:"dé",E:"é",F:"éf",G:"gé",H:"ha",I:"i",J:"jé",K:"ka",L:"él",M:"ém",N:"én",O:"o",P:"pé",Q:"ki",R:"ér",S:"és",T:"té",U:"u",V:"vé",W:"wé",X:"éks",Y:"yé",Z:"zét"};\nconst speechOverride={TO:"to.",BO:"bo.",RO:"ro.",DO:"do.",KO:"ko.",LO:"lo.",MO:"mo.",NO:"no.",PO:"po.",SO:"so.",GO:"go.",JO:"jo.",HO:"ho."};
 function syllables(w){const map={BUKU:["BU","KU"],TOPI:["TO","PI"],BOLA:["BO","LA"],MEJA:["ME","JA"],SAPI:["SA","PI"],KAKI:["KA","KI"],MATA:["MA","TA"],ROTI:["RO","TI"],BAJU:["BA","JU"]};return map[w]||[w.slice(0,Math.ceil(w.length/2)),w.slice(Math.ceil(w.length/2))]}
-function sequence(w){const out=[];for(const s of syllables(w)){for(const c of s)out.push({show:c,speak:letterSound[c]||c});out.push({show:s,speak:s})}out.push({show:w,speak:w});return out}
+function sequence(w){const out=[];for(const s of syllables(w)){for(const c of s)out.push({show:c,speak:letterSound[c]||c});out.push({show:s,speak:speechOverride[s]||s})}out.push({show:w,speak:w});return out}
 async function elevenSay(text){
   const r=await fetch("/api/tts",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text})});
   if(!r.ok)throw new Error("TTS");
