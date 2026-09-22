@@ -3,7 +3,7 @@ export default async function handler(req,res){
   const text=String(req.body?.text||"").trim();
   if(!text||text.length>30) return res.status(400).json({error:"Invalid text"});
   const key=process.env.ELEVENLABS_API_KEY;
-  if(!key) return res.status(500).json({error:"TTS key not configured"});
+  if(!key) return res.status(503).json({error:"TTS key not configured"});
   try{
     const r=await fetch("https://api.elevenlabs.io/v1/text-to-speech/52LXmmR0nGnIcDs1TL3f?output_format=mp3_44100_128",{
       method:"POST",
@@ -26,6 +26,6 @@ export default async function handler(req,res){
     res.setHeader("Vercel-CDN-Cache-Control","no-store");
     return res.status(200).send(buf);
   }catch(e){
-    return res.status(500).json({error:"TTS failed",detail:String(e?.message||e)});
+    return res.status(502).json({error:"TTS proxy failed",detail:String(e?.message||e)});
   }
 }
