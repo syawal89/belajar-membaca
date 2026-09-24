@@ -1,25 +1,229 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b0d12"><title>Belajar Membaca</title>
-<link rel="manifest" href="manifest.json">
-<style>
-*{box-sizing:border-box}body{margin:0;background:#0b0d12;color:#f7f7f8;font-family:system-ui,-apple-system,sans-serif;min-height:100dvh}
-.app{min-height:100dvh;display:flex;flex-direction:column;max-width:620px;margin:auto;padding:18px}
-.top{display:flex;align-items:center;justify-content:space-between}.title{font-weight:800;font-size:20px}.settings{background:#171a22;border:1px solid #2b303b;color:#fff;border-radius:14px;padding:10px 13px}
-.card{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.hint{color:#8f96a3;font-size:14px;margin-bottom:16px}.word{font-size:clamp(72px,22vw,132px);font-weight:900;letter-spacing:.06em;line-height:1}
-.reading{min-height:38px;margin-top:26px;font-size:24px;color:#aeb5c2;font-weight:700}
-.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-bottom:max(14px,env(safe-area-inset-bottom))}
-button{font:inherit;font-weight:800;border:0;cursor:pointer}.next{background:#20242d;color:#fff;border-radius:18px;padding:18px}.speak{background:#fff;color:#090b0f;border-radius:18px;padding:18px}
-.sheet{position:fixed;inset:0;background:#0009;display:none;align-items:flex-end}.sheet.show{display:flex}.panel{width:100%;max-width:620px;margin:auto;background:#151820;border-radius:24px 24px 0 0;padding:22px}
-.row{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:16px 0}select{background:#252a34;color:#fff;border:1px solid #343a46;padding:10px;border-radius:12px;font-size:16px}.close{width:100%;padding:15px;border-radius:14px}
-</style></head>
-<body><main class="app">
-<div class="top"><div class="title">Belajar Membaca</div><button class="settings" id="settings">⚙ Pengaturan</button></div>
-<section class="card"><div class="hint" id="hint">4 huruf</div><div class="word" id="word">BUKU</div><div class="reading" id="reading"></div></section>
-<div class="controls"><button class="next" id="next">↻ Ganti Kata</button><button class="speak" id="speak">🔊 Baca</button></div>
-</main>
-<div class="sheet" id="sheet"><div class="panel"><h2>Pengaturan</h2><div class="row"><label for="length">Jumlah huruf</label><select id="length"><option>3</option><option selected>4</option><option>5</option><option>6</option></select></div><button class="close" id="close">Selesai</button></div></div>
-<script src="app.js"></script></body></html>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Belajar Membaca</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background-color: #121214;
+      color: #FFFFFF;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 16px;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .header {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1E1E24;
+      padding: 12px 18px;
+      border-radius: 16px;
+      border: 1px solid #2E2E38;
+    }
+    label {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #A1A1AA;
+    }
+    select {
+      background-color: #27272A;
+      color: #38BDF8;
+      font-size: 1.05rem;
+      font-weight: 800;
+      border: 1px solid #3F3F46;
+      border-radius: 10px;
+      padding: 8px 12px;
+      outline: none;
+    }
+    .word-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #1E1E24;
+      width: 100%;
+      max-width: 440px;
+      height: 320px;
+      border-radius: 28px;
+      border: 2px solid #2E2E38;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+      text-align: center;
+    }
+    .word-display {
+      font-size: 4.6rem;
+      font-weight: 900;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+    }
+    .char {
+      transition: transform 0.2s ease, text-shadow 0.2s ease;
+      display: inline-block;
+    }
+    .color-1 { color: #38BDF8; }
+    .color-2 { color: #FACC15; }
+    .color-3 { color: #4ADE80; }
+    .highlight {
+      transform: scale(1.24);
+      color: #FFFFFF !important;
+      text-shadow: 0 0 25px rgba(255, 255, 255, 0.95);
+    }
+    .controls {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      gap: 14px;
+    }
+    button {
+      flex: 1;
+      padding: 18px 0;
+      font-size: 1.25rem;
+      font-weight: 800;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.1s ease, opacity 0.2s ease;
+    }
+    button:active { transform: scale(0.95); }
+    button:disabled { opacity: 0.55; cursor: not-allowed; }
+    .btn-speak { background-color: #22C55E; color: #052E16; }
+    .btn-next { background-color: #6366F1; color: #FFFFFF; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <label for="letterLength">Jumlah Huruf:</label>
+    <select id="letterLength">
+      <option value="3">3 Huruf</option>
+      <option value="4" selected>4 Huruf</option>
+      <option value="5">5 Huruf</option>
+      <option value="6">6 Huruf</option>
+    </select>
+  </div>
+  <div class="word-card">
+    <div id="wordDisplay" class="word-display"></div>
+  </div>
+  <div class="controls">
+    <button class="btn-speak" id="btnSpeak">🔊 Eja & Baca</button>
+    <button class="btn-next" id="btnNext">Ganti ➔</button>
+  </div>
+  <script>
+    const abjadId = {
+      'A': 'a', 'B': 'be', 'C': 'ce', 'D': 'de', 'E': 'e', 'F': 'ef', 'G': 'ge', 'H': 'ha',
+      'I': 'i', 'J': 'je', 'K': 'ka', 'L': 'el', 'M': 'em', 'N': 'en', 'O': 'o', 'P': 'pe',
+      'Q': 'ki', 'R': 'er', 'S': 'es', 'T': 'te', 'U': 'u', 'V': 'fe', 'W': 'we', 'X': 'eks',
+      'Y': 'ye', 'Z': 'zet'
+    };
+    const bankKata = {
+      3: ["IBU","UBI","AKI","API","ADA","INI","ITU","AYO","AIR","TAS","ROK","BUS","CAT","GUA","BAO","OLA","UJI","EBA","AKI","ALU","APA","ARE","ASU","BAU"],
+      4: ["BUKU","BOLA","KACA","SAPI","ROTI","PITA","KUDA","MEJA","MATA","TOPI","PADI","SUSU","GIGI","LARI","SAPU","KAYU","BAJU","BATU","PALU","TALI","BAPA","DUKU","LIMA","DUA","SATU","DASI","PIPI","DAGU","GULA","KOPI","SAYU","RUSA","CUMI","LELE","PENA","PETA","TAHU","TEMU","BUSA","KADO","RUSA","KURA","LABA","CUKA","PAPA","MAMA","KOKO","BIBI","PURI","RAGA","BUSA","JAHE","CILI","KILO","KOTA","DESA","BUMI","FOTO","JALA","KAYU","KOMA","LABU","LUKA","MADU","NAGA","NASI","PAHA","PARI","RAJA","RODA","SAWI","TEKO","TURI","PASU","PULU","SATE","SOPA","TORO","YOYO","ZONA"],
+      5: ["KAPAL","GAJAH","RUMAH","HUJAN","POHON","SURAT","GELAS","PISAU","LAMPU","KAPUR","KUCING","BEBEK","AYAM","MAWAR","MELATI","PAGAR","KASUR","PISANG","SABUN","TIMUN","JERUK","BOTOL","SEMUT","JARUM","BALON","BERAS","DAUN","PAPAN","KAPAS","BADAK","BAWANG","CABAI","CICAK","GARAM","GELAS","JAMUR","KATAK","KAYAS","KIPAS","KOLAM","LALAT","LEBAH","MACAN","PAGAR","PANCI","PASIR","PISAU","RACUN","RANTANG","SAYUR","SIKAT","SINGA","SIRUP","TUMIS","WAJAN","WORTEL"],
+      6: ["SEPATU","KERETA","CELANA","KELAPA","SEPEDA","KAMERA","MENARA","LEMARI","KEMEJA","BONEKA","PERAHU","TOMATO","PEPAYA","KECAPI","SEKOLA","GURITA","DELIMA","DAHAGA","KEDELA","CEMARA","MELATI","PESONA","PETANI","SERAYU","SESAME","TELAGA","WIJAYA","BAHASA","CIPUTA","KENARI"]
+    };
+    let kataSekarang="";
+    const display=document.getElementById("wordDisplay"),selectLength=document.getElementById("letterLength"),btnNext=document.getElementById("btnNext"),btnSpeak=document.getElementById("btnSpeak");
+    function renderKata(kata){
+      kataSekarang=kata; const len=kata.length; let html="";
+      for(let i=0;i<len;i++){
+        let warna="color-1";
+        if(len===3) warna=i===0?"color-1":"color-2";
+        else if(len===4||len===5) warna=i<2?"color-1":"color-2";
+        else if(len===6){if(i<2)warna="color-1";else if(i<4)warna="color-2";else warna="color-3";}
+        html+=`<span class="char ${warna}" id="char-${i}">${kata[i]}</span>`;
+      }
+      display.innerHTML=html;
+    }
+    function gantiKata(){
+      const len=selectLength.value,daftar=bankKata[len]; let kataBaru;
+      do{kataBaru=daftar[Math.floor(Math.random()*daftar.length)];}while(kataBaru===kataSekarang&&daftar.length>1);
+      renderKata(kataBaru);
+    }
+    function jeda(ms){return new Promise(resolve=>setTimeout(resolve,ms));}
+    function bunyikan(teks){
+      return new Promise(resolve=>{
+        const url=`https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(teks)}&tl=id&client=tw-ob`;
+        const audio=new Audio(url);
+        audio.onended=resolve;
+        audio.onerror=()=>fallbackTTS(teks,resolve);
+        audio.play().catch(()=>fallbackTTS(teks,resolve));
+      });
+    }
+    function fallbackTTS(teks,callback){
+      window.speechSynthesis.cancel();
+      const suara=new SpeechSynthesisUtterance(teks);
+      suara.lang="id-ID"; suara.rate=0.85; suara.onend=callback; suara.onerror=callback;
+      window.speechSynthesis.speak(suara);
+    }
+    function sorot(indeksArr){
+      document.querySelectorAll(".char").forEach(el=>el.classList.remove("highlight"));
+      indeksArr.forEach(idx=>{const el=document.getElementById(`char-${idx}`);if(el)el.classList.add("highlight");});
+    }
+    function lepasSorot(){document.querySelectorAll(".char").forEach(el=>el.classList.remove("highlight"));}
+    async function mulaiEja(){
+      btnSpeak.disabled=true; btnNext.disabled=true;
+      const len=kataSekarang.length,h=kataSekarang.split("");
+      if(len===3){
+        sorot([0]);await bunyikan(h[0]);await jeda(350);
+        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(300);
+        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(300);
+        sorot([1,2]);await bunyikan(h[1]+h[2]);await jeda(500);
+        sorot([0,1,2]);await bunyikan(kataSekarang);
+      }else if(len===4){
+        sorot([0]);await bunyikan(abjadId[h[0]]||h[0]);await jeda(300);
+        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(300);
+        sorot([0,1]);await bunyikan(h[0]+h[1]);await jeda(500);
+        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(300);
+        sorot([3]);await bunyikan(abjadId[h[3]]||h[3]);await jeda(300);
+        sorot([2,3]);await bunyikan(h[2]+h[3]);await jeda(600);
+        sorot([0,1,2,3]);await bunyikan(kataSekarang);
+      }else if(len===5){
+        sorot([0]);await bunyikan(abjadId[h[0]]||h[0]);await jeda(300);
+        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(300);
+        sorot([0,1]);await bunyikan(h[0]+h[1]);await jeda(500);
+        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(300);
+        sorot([3]);await bunyikan(abjadId[h[3]]||h[3]);await jeda(300);
+        sorot([2,3]);await bunyikan(h[2]+h[3]);await jeda(400);
+        sorot([4]);await bunyikan(abjadId[h[4]]||h[4]);await jeda(300);
+        sorot([2,3,4]);await bunyikan(h[2]+h[3]+h[4]);await jeda(600);
+        sorot([0,1,2,3,4]);await bunyikan(kataSekarang);
+      }else if(len===6){
+        sorot([0]);await bunyikan(abjadId[h[0]]||h[0]);await jeda(300);
+        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(300);
+        sorot([0,1]);await bunyikan(h[0]+h[1]);await jeda(450);
+        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(300);
+        sorot([3]);await bunyikan(abjadId[h[3]]||h[3]);await jeda(300);
+        sorot([2,3]);await bunyikan(h[2]+h[3]);await jeda(450);
+        sorot([4]);await bunyikan(abjadId[h[4]]||h[4]);await jeda(300);
+        sorot([5]);await bunyikan(abjadId[h[5]]||h[5]);await jeda(300);
+        sorot([4,5]);await bunyikan(h[4]+h[5]);await jeda(600);
+        sorot([0,1,2,3,4,5]);await bunyikan(kataSekarang);
+      }
+      await jeda(300);lepasSorot();btnSpeak.disabled=false;btnNext.disabled=false;
+    }
+    btnNext.addEventListener("click",gantiKata);
+    btnSpeak.addEventListener("click",mulaiEja);
+    selectLength.addEventListener("change",gantiKata);
+    gantiKata();
+  </script>
+</body>
+</html>
