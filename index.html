@@ -183,42 +183,42 @@
       btnSpeak.disabled=true; btnNext.disabled=true;
       const len=kataSekarang.length,h=kataSekarang.split("");
       if(len===3){
-        sorot([0]);await bunyikan(h[0]);await jeda(350);
-        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(300);
-        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(300);
-        sorot([1,2]);await bunyikan(h[1]+h[2]);await jeda(500);
+        sorot([0]);await bunyikan(h[0]);await jeda(438);
+        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(375);
+        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(375);
+        sorot([1,2]);await bunyikan(h[1]+h[2]);await jeda(625);
         sorot([0,1,2]);await bunyikan(kataSekarang);
       }else if(len===4){
-        sorot([0]);await bunyikan(abjadId[h[0]]||h[0]);await jeda(300);
-        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(300);
-        sorot([0,1]);await bunyikan(h[0]+h[1]);await jeda(500);
-        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(300);
-        sorot([3]);await bunyikan(abjadId[h[3]]||h[3]);await jeda(300);
-        sorot([2,3]);await bunyikan(h[2]+h[3]);await jeda(600);
+        sorot([0]);await bunyikan(abjadId[h[0]]||h[0]);await jeda(375);
+        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(375);
+        sorot([0,1]);await bunyikan(h[0]+h[1]);await jeda(625);
+        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(375);
+        sorot([3]);await bunyikan(abjadId[h[3]]||h[3]);await jeda(375);
+        sorot([2,3]);await bunyikan(h[2]+h[3]);await jeda(750);
         sorot([0,1,2,3]);await bunyikan(kataSekarang);
       }else if(len===5){
-        sorot([0]);await bunyikan(abjadId[h[0]]||h[0]);await jeda(300);
-        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(300);
-        sorot([0,1]);await bunyikan(h[0]+h[1]);await jeda(500);
-        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(300);
-        sorot([3]);await bunyikan(abjadId[h[3]]||h[3]);await jeda(300);
-        sorot([2,3]);await bunyikan(h[2]+h[3]);await jeda(400);
-        sorot([4]);await bunyikan(abjadId[h[4]]||h[4]);await jeda(300);
-        sorot([2,3,4]);await bunyikan(h[2]+h[3]+h[4]);await jeda(600);
+        sorot([0]);await bunyikan(abjadId[h[0]]||h[0]);await jeda(375);
+        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(375);
+        sorot([0,1]);await bunyikan(h[0]+h[1]);await jeda(625);
+        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(375);
+        sorot([3]);await bunyikan(abjadId[h[3]]||h[3]);await jeda(375);
+        sorot([2,3]);await bunyikan(h[2]+h[3]);await jeda(625);
+        sorot([4]);await bunyikan(abjadId[h[4]]||h[4]);await jeda(375);
+        sorot([2,3,4]);await bunyikan(h[2]+h[3]+h[4]);await jeda(750);
         sorot([0,1,2,3,4]);await bunyikan(kataSekarang);
       }else if(len===6){
-        sorot([0]);await bunyikan(abjadId[h[0]]||h[0]);await jeda(300);
-        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(300);
-        sorot([0,1]);await bunyikan(h[0]+h[1]);await jeda(450);
-        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(300);
-        sorot([3]);await bunyikan(abjadId[h[3]]||h[3]);await jeda(300);
-        sorot([2,3]);await bunyikan(h[2]+h[3]);await jeda(450);
-        sorot([4]);await bunyikan(abjadId[h[4]]||h[4]);await jeda(300);
-        sorot([5]);await bunyikan(abjadId[h[5]]||h[5]);await jeda(300);
-        sorot([4,5]);await bunyikan(h[4]+h[5]);await jeda(600);
+        sorot([0]);await bunyikan(abjadId[h[0]]||h[0]);await jeda(375);
+        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(375);
+        sorot([0,1]);await bunyikan(h[0]+h[1]);await jeda(563);
+        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(375);
+        sorot([3]);await bunyikan(abjadId[h[3]]||h[3]);await jeda(375);
+        sorot([2,3]);await bunyikan(h[2]+h[3]);await jeda(563);
+        sorot([4]);await bunyikan(abjadId[h[4]]||h[4]);await jeda(375);
+        sorot([5]);await bunyikan(abjadId[h[5]]||h[5]);await jeda(375);
+        sorot([4,5]);await bunyikan(h[4]+h[5]);await jeda(750);
         sorot([0,1,2,3,4,5]);await bunyikan(kataSekarang);
       }
-      await jeda(300);lepasSorot();btnSpeak.disabled=false;btnNext.disabled=false;
+      await jeda(375);lepasSorot();btnSpeak.disabled=false;btnNext.disabled=false;
     }
     btnNext.addEventListener("click",gantiKata);
     btnSpeak.addEventListener("click",mulaiEja);
