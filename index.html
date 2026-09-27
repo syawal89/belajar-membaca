@@ -5,225 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Belajar Membaca</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-    body {
-      background-color: #121214;
-      color: #FFFFFF;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      padding: 24px 16px;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .header {
-      width: 100%;
-      max-width: 440px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #1E1E24;
-      padding: 12px 18px;
-      border-radius: 16px;
-      border: 1px solid #2E2E38;
-    }
-    label {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: #A1A1AA;
-    }
-    select {
-      background-color: #27272A;
-      color: #38BDF8;
-      font-size: 1.05rem;
-      font-weight: 800;
-      border: 1px solid #3F3F46;
-      border-radius: 10px;
-      padding: 8px 12px;
-      outline: none;
-    }
-    .word-card {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #1E1E24;
-      width: 100%;
-      max-width: 440px;
-      height: 320px;
-      border-radius: 28px;
-      border: 2px solid #2E2E38;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
-      text-align: center;
-    }
-    .word-display {
-      font-size: 4.6rem;
-      font-weight: 900;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 2px;
-    }
-    .char {
-      transition: transform 0.2s ease, text-shadow 0.2s ease;
-      display: inline-block;
-    }
-    .color-1 { color: #38BDF8; }
-    .color-2 { color: #FACC15; }
-    .color-3 { color: #4ADE80; }
-    .highlight {
-      transform: scale(1.24);
-      color: #FFFFFF !important;
-      text-shadow: 0 0 25px rgba(255, 255, 255, 0.95);
-    }
-    .controls {
-      width: 100%;
-      max-width: 440px;
-      display: flex;
-      gap: 14px;
-    }
-    button {
-      flex: 1;
-      padding: 18px 0;
-      font-size: 1.25rem;
-      font-weight: 800;
-      border: none;
-      border-radius: 16px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      transition: transform 0.1s ease, opacity 0.2s ease;
-    }
-    button:active { transform: scale(0.95); }
-    button:disabled { opacity: 0.55; cursor: not-allowed; }
-    .btn-speak { background-color: #22C55E; color: #052E16; }
-    .btn-next { background-color: #6366F1; color: #FFFFFF; }
+    * { box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+    body { background-color:#121214;color:#FFF;height:100vh;height:100dvh;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding:12px 16px 14px;user-select:none;-webkit-tap-highlight-color:transparent;overflow:hidden;gap:10px; }
+    .top-bar{width:100%;max-width:420px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+    .star-badge-top{background-color:#1E1E24;border:1px solid #2E2E38;border-radius:20px;padding:5px 14px;display:flex;align-items:center;gap:6px;font-weight:800;color:#FACC15;font-size:1rem}
+    .btn-settings-open{background-color:#1E1E24;border:1px solid #2E2E38;color:#38BDF8;border-radius:20px;padding:5px 14px;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background-color .2s ease}.btn-settings-open:active{background-color:#27272A}
+    .word-card{display:flex;flex-direction:column;align-items:center;justify-content:center;background-color:#1E1E24;width:100%;max-width:420px;flex:1;max-height:420px;min-height:270px;border-radius:28px;border:2px solid #2E2E38;box-shadow:0 10px 30px rgba(0,0,0,.5);text-align:center;padding:14px;gap:16px}
+    .icon-box{width:140px;height:140px;border-radius:26px;background-color:#27272A;border:3px dashed #3F3F46;display:flex;align-items:center;justify-content:center;position:relative;transition:all .35s cubic-bezier(.34,1.56,.64,1)}
+    .icon-box.revealed{border:3px solid #FACC15;background-color:#262417;transform:scale(1.05);box-shadow:0 8px 24px rgba(250,204,21,.25)}
+    .icon-box img{width:110px;height:110px;object-fit:contain;opacity:0;transform:scale(.4);transition:all .35s cubic-bezier(.34,1.56,.64,1);display:none}.icon-box.revealed img{opacity:1;transform:scale(1);display:block}.icon-box .mystery-mark{font-size:3.4rem;font-weight:900;color:#71717A}.icon-box.revealed .mystery-mark{display:none}
+    .word-display{font-size:4.4rem;font-weight:900;letter-spacing:5px;display:flex;justify-content:center;align-items:center;gap:4px}.char{transition:transform .1s ease,text-shadow .1s ease;display:inline-block}.color-1{color:#38BDF8}.color-2{color:#FACC15}.color-3{color:#4ADE80}
+    .blank-slot{display:inline-block;min-width:44px;border-bottom:5px solid #F43F5E;color:#F43F5E;animation:pulseSlot 1.2s infinite ease-in-out}@keyframes pulseSlot{0%,100%{opacity:.5}50%{opacity:1}}.highlight{transform:scale(1.24);color:#FFF!important;text-shadow:0 0 25px rgba(255,255,255,.95)}
+    .controls-container{width:100%;max-width:420px;display:flex;flex-direction:column;gap:8px;flex-shrink:0;margin-bottom:2px}.controls-learn{display:flex;flex-direction:column;gap:8px;width:100%}.controls-row{width:100%;display:flex;gap:10px}
+    button.main-btn{flex:1;padding:14px 0;font-size:1.1rem;font-weight:800;border:none;border-radius:15px;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:6px;transition:transform .1s ease,opacity .2s ease}button.main-btn:active{transform:scale(.96)}button.main-btn:disabled{opacity:.55;cursor:not-allowed}.btn-speak{background-color:#22C55E;color:#052E16}.btn-next{background-color:#6366F1;color:#FFF}
+    .btn-autoplay{width:100%;padding:12px 0;font-size:1rem;font-weight:800;border:2px solid #EC4899;background-color:#27272A;color:#F472B6;border-radius:14px;cursor:pointer;transition:all .2s ease}.btn-autoplay.active{background-color:#EC4899;color:#FFF;box-shadow:0 0 20px rgba(236,72,153,.4)}
+    .quiz-options{display:none;gap:10px;width:100%}.btn-choice{flex:1;height:64px;font-size:2.1rem;font-weight:900;background-color:#27272A;color:#38BDF8;border:2px solid #3F3F46;border-radius:16px;cursor:pointer;box-shadow:0 5px 0 #18181B;transition:transform .1s ease,background-color .2s ease}.btn-choice:active{transform:translateY(3px);box-shadow:0 2px 0 #18181B}.btn-choice.wrong{background-color:#451A1A;border-color:#EF4444;color:#F87171;animation:shake .35s ease}@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+    .settings-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:120;opacity:0;pointer-events:none;transition:opacity .25s ease;padding:16px}.settings-modal.active{opacity:1;pointer-events:auto}.settings-card{background:#1E1E24;border:1px solid #3F3F46;border-radius:24px;padding:20px 18px;width:100%;max-width:380px;display:flex;flex-direction:column;gap:14px;box-shadow:0 15px 40px rgba(0,0,0,.8);transform:scale(.9);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}.settings-modal.active .settings-card{transform:scale(1)}.settings-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #2E2E38;padding-bottom:8px}.settings-title{font-size:1.15rem;font-weight:800;color:#38BDF8}
+    .mode-switch-container{display:flex;background-color:#121214;padding:4px;border-radius:12px;border:1px solid #2E2E38;gap:6px}.btn-mode{flex:1;padding:9px;border-radius:9px;border:none;font-size:.95rem;font-weight:800;cursor:pointer;background:transparent;color:#A1A1AA;transition:all .2s ease}.btn-mode.active{background-color:#38BDF8;color:#082F49}
+    .settings-row{display:flex;gap:10px;width:100%}.setting-group{flex:1;display:flex;flex-direction:column;gap:4px}label{font-size:.8rem;font-weight:600;color:#A1A1AA}select{background-color:#27272A;color:#38BDF8;font-size:.95rem;font-weight:800;border:1px solid #3F3F46;border-radius:10px;padding:8px 10px;outline:none;width:100%}
+    .btn-case-toggle{width:100%;padding:10px;background-color:#27272A;border:1px solid #3F3F46;border-radius:10px;color:#FACC15;font-size:.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}.btn-close-settings{width:100%;padding:12px;border-radius:12px;background:#38BDF8;color:#082F49;font-size:1.05rem;font-weight:800;border:none;cursor:pointer;margin-top:2px}
+    .celebration-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:150;opacity:0;pointer-events:none;transition:opacity .3s ease}.celebration-modal.active{opacity:1;pointer-events:auto}.celebration-card{background:#1E1E24;border:2px solid #FACC15;border-radius:28px;padding:28px 20px;text-align:center;max-width:320px;width:90%;transform:scale(.7);transition:transform .3s cubic-bezier(.34,1.56,.64,1);box-shadow:0 10px 40px rgba(250,204,21,.3)}.celebration-modal.active .celebration-card{transform:scale(1)}.celebration-icon{font-size:3.6rem;margin-bottom:8px}.celebration-title{font-size:1.6rem;font-weight:900;color:#FACC15;margin-bottom:6px}.celebration-desc{font-size:1rem;color:#E4E4E7;margin-bottom:20px;font-weight:600}.btn-continue{width:100%;padding:13px;border-radius:14px;background:#22C55E;color:#052E16;font-size:1.05rem;font-weight:800;border:none;cursor:pointer}
   </style>
 </head>
 <body>
-  <div class="header">
-    <label for="letterLength">Jumlah Huruf:</label>
-    <select id="letterLength">
-      <option value="3">3 Huruf</option>
-      <option value="4" selected>4 Huruf</option>
-      <option value="5">5 Huruf</option>
-      <option value="6">6 Huruf</option>
-    </select>
-  </div>
-  <div class="word-card">
-    <div id="wordDisplay" class="word-display"></div>
-  </div>
-  <div class="controls">
-    <button class="btn-speak" id="btnSpeak">🔊 Eja & Baca</button>
-    <button class="btn-next" id="btnNext">Ganti ➔</button>
-  </div>
-  <script>
-    const abjadId = {
-      'A': 'a', 'B': 'be', 'C': 'ce', 'D': 'de', 'E': 'e', 'F': 'ef', 'G': 'ge', 'H': 'ha',
-      'I': 'i', 'J': 'je', 'K': 'ka', 'L': 'el', 'M': 'em', 'N': 'en', 'O': 'o', 'P': 'pe',
-      'Q': 'ki', 'R': 'er', 'S': 'es', 'T': 'te', 'U': 'u', 'V': 'fe', 'W': 'we', 'X': 'eks',
-      'Y': 'ye', 'Z': 'zet'
-    };
-    const bankKata = {
-      3: ["IBU","UBI","AKI","API","ADA","INI","ITU","AYO","AIR","TAS","ROK","BUS","CAT","GUA","BAO","OLA","UJI","EBA","AKI","ALU","APA","ARE","ASU","BAU"],
-      4: ["BUKU","BOLA","KACA","SAPI","ROTI","PITA","KUDA","MEJA","MATA","TOPI","PADI","SUSU","GIGI","LARI","SAPU","KAYU","BAJU","BATU","PALU","TALI","BAPA","DUKU","LIMA","DUA","SATU","DASI","PIPI","DAGU","GULA","KOPI","SAYU","RUSA","CUMI","LELE","PENA","PETA","TAHU","TEMU","BUSA","KADO","RUSA","KURA","LABA","CUKA","PAPA","MAMA","KOKO","BIBI","PURI","RAGA","BUSA","JAHE","CILI","KILO","KOTA","DESA","BUMI","FOTO","JALA","KAYU","KOMA","LABU","LUKA","MADU","NAGA","NASI","PAHA","PARI","RAJA","RODA","SAWI","TEKO","TURI","PASU","PULU","SATE","SOPA","TORO","YOYO","ZONA"],
-      5: ["KAPAL","GAJAH","RUMAH","HUJAN","POHON","SURAT","GELAS","PISAU","LAMPU","KAPUR","KUCING","BEBEK","AYAM","MAWAR","MELATI","PAGAR","KASUR","PISANG","SABUN","TIMUN","JERUK","BOTOL","SEMUT","JARUM","BALON","BERAS","DAUN","PAPAN","KAPAS","BADAK","BAWANG","CABAI","CICAK","GARAM","GELAS","JAMUR","KATAK","KAYAS","KIPAS","KOLAM","LALAT","LEBAH","MACAN","PAGAR","PANCI","PASIR","PISAU","RACUN","RANTANG","SAYUR","SIKAT","SINGA","SIRUP","TUMIS","WAJAN","WORTEL"],
-      6: ["SEPATU","KERETA","CELANA","KELAPA","SEPEDA","KAMERA","MENARA","LEMARI","KEMEJA","BONEKA","PERAHU","TOMATO","PEPAYA","KECAPI","SEKOLA","GURITA","DELIMA","DAHAGA","KEDELA","CEMARA","MELATI","PESONA","PETANI","SERAYU","SESAME","TELAGA","WIJAYA","BAHASA","CIPUTA","KENARI"]
-    };
-    let kataSekarang="";
-    const display=document.getElementById("wordDisplay"),selectLength=document.getElementById("letterLength"),btnNext=document.getElementById("btnNext"),btnSpeak=document.getElementById("btnSpeak");
-    function renderKata(kata){
-      kataSekarang=kata; const len=kata.length; let html="";
-      for(let i=0;i<len;i++){
-        let warna="color-1";
-        if(len===3) warna=i===0?"color-1":"color-2";
-        else if(len===4||len===5) warna=i<2?"color-1":"color-2";
-        else if(len===6){if(i<2)warna="color-1";else if(i<4)warna="color-2";else warna="color-3";}
-        html+=`<span class="char ${warna}" id="char-${i}">${kata[i]}</span>`;
-      }
-      display.innerHTML=html;
-    }
-    function gantiKata(){
-      const len=selectLength.value,daftar=bankKata[len]; let kataBaru;
-      do{kataBaru=daftar[Math.floor(Math.random()*daftar.length)];}while(kataBaru===kataSekarang&&daftar.length>1);
-      renderKata(kataBaru);
-    }
-    function jeda(ms){return new Promise(resolve=>setTimeout(resolve,ms));}
-    function bunyikan(teks){
-      return new Promise(resolve=>{
-        const url=`https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(teks)}&tl=id&client=tw-ob`;
-        const audio=new Audio(url);
-        audio.onended=resolve;
-        audio.onerror=()=>fallbackTTS(teks,resolve);
-        audio.play().catch(()=>fallbackTTS(teks,resolve));
-      });
-    }
-    function fallbackTTS(teks,callback){
-      window.speechSynthesis.cancel();
-      const suara=new SpeechSynthesisUtterance(teks);
-      suara.lang="id-ID"; suara.rate=0.85; suara.onend=callback; suara.onerror=callback;
-      window.speechSynthesis.speak(suara);
-    }
-    function sorot(indeksArr){
-      document.querySelectorAll(".char").forEach(el=>el.classList.remove("highlight"));
-      indeksArr.forEach(idx=>{const el=document.getElementById(`char-${idx}`);if(el)el.classList.add("highlight");});
-    }
-    function lepasSorot(){document.querySelectorAll(".char").forEach(el=>el.classList.remove("highlight"));}
-    async function mulaiEja(){
-      btnSpeak.disabled=true; btnNext.disabled=true;
-      const len=kataSekarang.length,h=kataSekarang.split("");
-      if(len===3){
-        sorot([0]);await bunyikan(h[0]);await jeda(438);
-        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(375);
-        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(375);
-        sorot([1,2]);await bunyikan(h[1]+h[2]);await jeda(625);
-        sorot([0,1,2]);await bunyikan(kataSekarang);
-      }else if(len===4){
-        sorot([0]);await bunyikan(abjadId[h[0]]||h[0]);await jeda(1200);
-        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(1250);
-        sorot([0,1]);await bunyikan(h[0]+h[1]);await jeda(1450);
-        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(1200);
-        sorot([3]);await bunyikan(abjadId[h[3]]||h[3]);await jeda(1200);
-        sorot([2,3]);await bunyikan(h[2]+h[3]);await jeda(1550);
-        sorot([0,1,2,3]);await bunyikan(kataSekarang);
-      }else if(len===5){
-        sorot([0]);await bunyikan(abjadId[h[0]]||h[0]);await jeda(375);
-        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(375);
-        sorot([0,1]);await bunyikan(h[0]+h[1]);await jeda(625);
-        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(375);
-        sorot([3]);await bunyikan(abjadId[h[3]]||h[3]);await jeda(375);
-        sorot([2,3]);await bunyikan(h[2]+h[3]);await jeda(625);
-        sorot([4]);await bunyikan(abjadId[h[4]]||h[4]);await jeda(375);
-        sorot([2,3,4]);await bunyikan(h[2]+h[3]+h[4]);await jeda(750);
-        sorot([0,1,2,3,4]);await bunyikan(kataSekarang);
-      }else if(len===6){
-        sorot([0]);await bunyikan(abjadId[h[0]]||h[0]);await jeda(375);
-        sorot([1]);await bunyikan(abjadId[h[1]]||h[1]);await jeda(375);
-        sorot([0,1]);await bunyikan(h[0]+h[1]);await jeda(563);
-        sorot([2]);await bunyikan(abjadId[h[2]]||h[2]);await jeda(375);
-        sorot([3]);await bunyikan(abjadId[h[3]]||h[3]);await jeda(375);
-        sorot([2,3]);await bunyikan(h[2]+h[3]);await jeda(563);
-        sorot([4]);await bunyikan(abjadId[h[4]]||h[4]);await jeda(375);
-        sorot([5]);await bunyikan(abjadId[h[5]]||h[5]);await jeda(375);
-        sorot([4,5]);await bunyikan(h[4]+h[5]);await jeda(750);
-        sorot([0,1,2,3,4,5]);await bunyikan(kataSekarang);
-      }
-      await jeda(375);lepasSorot();btnSpeak.disabled=false;btnNext.disabled=false;
-    }
-    btnNext.addEventListener("click",gantiKata);
-    btnSpeak.addEventListener("click",mulaiEja);
-    selectLength.addEventListener("change",gantiKata);
-    gantiKata();
-  </script>
-</body>
-</html>
+<div class="top-bar"><div class="star-badge-top"><span>&#9733;</span><span id="starCount">0</span></div><button class="btn-settings-open" id="btnOpenSettings">Pengaturan &#9881;</button></div>
+<div class="word-card"><div class="icon-box" id="iconBox"><span class="mystery-mark">?</span><img id="wordImage" src="" alt="Ilustrasi" onerror="fallbackGambar()"></div><div id="wordDisplay" class="word-display"></div></div>
+<div class="controls-container"><div class="controls-learn" id="learnControls"><div class="controls-row"><button class="main-btn btn-speak" id="btnSpeak">Eja & Baca</button><button class="main-btn btn-next" id="btnNext">Ganti Kata</button></div><button class="btn-autoplay" id="btnAutoPlay">Putar Otomatis</button></div><div class="quiz-options" id="quizControls"><button class="btn-choice" id="choice0"></button><button class="btn-choice" id="choice1"></button><button class="btn-choice" id="choice2"></button></div></div>
+<div class="settings-modal" id="settingsModal"><div class="settings-card"><div class="settings-header"><span class="settings-title">Pengaturan Belajar</span></div><div class="mode-switch-container"><button class="btn-mode active" id="modeLearn">Mode Belajar</button><button class="btn-mode" id="modeQuiz">Mode Kuis Tebak</button></div><div class="settings-row"><div class="setting-group"><label for="letterLength">Jumlah Huruf:</label><select id="letterLength"><option value="3">3 Huruf</option><option value="4" selected>4 Huruf</option><option value="5">5 Huruf</option><option value="6">6 Huruf</option></select></div><div class="setting-group"><label for="speechSpeed">Kecepatan Eja:</label><select id="speechSpeed"><option value="slow">Lambat</option><option value="normal" selected>Sedang</option><option value="fast">Cepat</option></select></div></div><button class="btn-case-toggle" id="btnCaseToggle">[Aa] Huruf: BESAR (KAPITAL)</button><button class="btn-close-settings" id="btnCloseSettings">Selesai & Simpan</button></div></div>
+<div class="celebration-modal" id="celebrationModal"><div class="celebration-card"><div class="celebration-icon">&#127942;</div><div class="celebration-title">LUAR BIASA!</div><div class="celebration-desc" id="celebrationText">Kamu berhasil mengumpulkan 5 Bintang!</div><button class="btn-continue" id="btnContinue">Lanjut Belajar</button></div></div>
+<script>
+const abjadId={'A':'a','B':'be','C':'ce','D':'de','E':'e','F':'ef','G':'ge','H':'ha','I':'i','J':'je','K':'ka','L':'el','M':'em','N':'en','O':'o','P':'pe','Q':'ki','R':'er','S':'es','T':'te','U':'u','V':'fe','W':'we','X':'eks','Y':'ye','Z':'zet'};
+const twemojiBase="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/";
+const gambarWarna={"BUKU":twemojiBase+"1f4d6.svg","BOLA":twemojiBase+"26bd.svg","SAPI":twemojiBase+"1f404.svg","ROTI":twemojiBase+"1f35e.svg","TOPI":twemojiBase+"1f9e2.svg","MATA":twemojiBase+"1f441.svg","KUDA":twemojiBase+"1f40e.svg","MEJA":twemojiBase+"1fa91.svg","SUSU":twemojiBase+"1f95b.svg","GIGI":twemojiBase+"1f9b7.svg","SAPU":twemojiBase+"1f9f9.svg","KAYU":twemojiBase+"1fab5.svg","BAJU":twemojiBase+"1f455.svg","BATU":twemojiBase+"1faa8.svg","PALU":twemojiBase+"1f528.svg","TALI":twemojiBase+"1f9f5.svg","DUKU":twemojiBase+"1f34b.svg","RUSA":twemojiBase+"1f98c.svg","CUMI":twemojiBase+"1f991.svg","KADO":twemojiBase+"1f381.svg","IBU":twemojiBase+"1f469.svg","API":twemojiBase+"1f525.svg","AIR":twemojiBase+"1f4a7.svg","TAS":twemojiBase+"1f392.svg","ROK":twemojiBase+"1f457.svg","BUS":twemojiBase+"1f68c.svg","CAT":twemojiBase+"1f3a8.svg","RUMAH":twemojiBase+"1f3e0.svg","POHON":twemojiBase+"1f333.svg","KAPAL":twemojiBase+"1f6a2.svg","GAJAH":twemojiBase+"1f418.svg","HUJAN":twemojiBase+"1f327.svg","GELAS":twemojiBase+"1f943.svg","PISAU":twemojiBase+"1f52a.svg","LAMPU":twemojiBase+"1f4a1.svg","KUCING":twemojiBase+"1f431.svg","BEBEK":twemojiBase+"1f986.svg","AYAM":twemojiBase+"1f414.svg","MAWAR":twemojiBase+"1f339.svg","PISANG":twemojiBase+"1f34c.svg","JERUK":twemojiBase+"1f34a.svg","SEPEDA":twemojiBase+"1f6b2.svg","SEPATU":twemojiBase+"1f45f.svg","KERETA":twemojiBase+"1f682.svg","CELANA":twemojiBase+"1f456.svg","KELAPA":twemojiBase+"1f965.svg","KAMERA":twemojiBase+"1f4f7.svg","LEMARI":twemojiBase+"1f5c4.svg","KEMEJA":twemojiBase+"1f454.svg","BONEKA":twemojiBase+"1f9f8.svg","PERAHU":twemojiBase+"1f6a3.svg","GURITA":twemojiBase+"1f419.svg","DEFAULT":twemojiBase+"2b50.svg"};
+const bankKata={3:["IBU","API","AIR","TAS","ROK","BUS","CAT"],4:["BUKU","BOLA","SAPI","ROTI","TOPI","MATA","KUDA","MEJA","SUSU","GIGI","SAPU","KAYU","BAJU","BATU","PALU","TALI","DUKU","RUSA","CUMI","KADO"],5:["RUMAH","POHON","KAPAL","GAJAH","HUJAN","GELAS","PISAU","LAMPU","KUCING","BEBEK","AYAM","MAWAR","PISANG","JERUK"],6:["SEPEDA","SEPATU","KERETA","CELANA","KELAPA","KAMERA","LEMARI","KEMEJA","BONEKA","PERAHU","GURITA"]};
+let kataSekarang="",isUpperCase=true,voices=[],isSpeaking=false,isAutoPlay=false,isQuizMode=false,jumlahBintang=0,kataSudahDinilai=false,missingIndex=-1,correctChar="",currentChoices=[];
+const display=document.getElementById("wordDisplay"),selectLength=document.getElementById("letterLength"),selectSpeed=document.getElementById("speechSpeed"),btnCaseToggle=document.getElementById("btnCaseToggle"),btnNext=document.getElementById("btnNext"),btnSpeak=document.getElementById("btnSpeak"),btnAutoPlay=document.getElementById("btnAutoPlay"),iconBox=document.getElementById("iconBox"),wordImage=document.getElementById("wordImage"),starCount=document.getElementById("starCount"),celebrationModal=document.getElementById("celebrationModal"),celebrationText=document.getElementById("celebrationText"),btnContinue=document.getElementById("btnContinue"),settingsModal=document.getElementById("settingsModal"),btnOpenSettings=document.getElementById("btnOpenSettings"),btnCloseSettings=document.getElementById("btnCloseSettings"),modeLearn=document.getElementById("modeLearn"),modeQuiz=document.getElementById("modeQuiz"),learnControls=document.getElementById("learnControls"),quizControls=document.getElementById("quizControls");
+function muatDaftarSuara(){voices=window.speechSynthesis.getVoices()} window.speechSynthesis.onvoiceschanged=muatDaftarSuara;muatDaftarSuara();
+function fallbackGambar(){wordImage.src=twemojiBase+"2b50.svg"}
+function putarNadaKemenangan(){try{const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.type="sine";o.frequency.setValueAtTime(587.33,a.currentTime);o.frequency.setValueAtTime(880,a.currentTime+.1);g.gain.setValueAtTime(.3,a.currentTime);g.gain.exponentialRampToValueAtTime(.01,a.currentTime+.4);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.4)}catch(e){}}
+function putarNadaSalah(){try{const a=new(window.AudioContext||window.webkitAudioContext)(),o1=a.createOscillator(),g1=a.createGain();o1.type="sawtooth";o1.frequency.setValueAtTime(160,a.currentTime);g1.gain.setValueAtTime(.2,a.currentTime);g1.gain.exponentialRampToValueAtTime(.01,a.currentTime+.16);o1.connect(g1);g1.connect(a.destination);o1.start(a.currentTime);o1.stop(a.currentTime+.16);const o2=a.createOscillator(),g2=a.createGain();o2.type="sawtooth";o2.frequency.setValueAtTime(110,a.currentTime+.18);g2.gain.setValueAtTime(.25,a.currentTime+.18);g2.gain.exponentialRampToValueAtTime(.01,a.currentTime+.42);o2.connect(g2);g2.connect(a.destination);o2.start(a.currentTime+.18);o2.stop(a.currentTime+.42)}catch(e){}}
+function renderKata(kata){kataSekarang=kata;kataSudahDinilai=false;const len=kata.length;let html="";for(let i=0;i<len;i++){let warna="color-1";if(len===3)warna=i===0?"color-1":"color-2";else if(len===4||len===5)warna=i<2?"color-1":"color-2";else if(len===6){if(i<2)warna="color-1";else if(i<4)warna="color-2";else warna="color-3"}if(isQuizMode&&i===missingIndex)html+=`<span class="char blank-slot" id="char-${i}">_</span>`;else{const c=isUpperCase?kata[i].toUpperCase():kata[i].toLowerCase();html+=`<span class="char ${warna}" id="char-${i}">${c}</span>`}}display.innerHTML=html;wordImage.src=gambarWarna[kata]||gambarWarna.DEFAULT;if(isQuizMode)iconBox.classList.add("revealed");else iconBox.classList.remove("revealed")}
+function siapkanSoalKuis(kata){const k=kata.toUpperCase();missingIndex=Math.floor(Math.random()*k.length);correctChar=k[missingIndex];const a="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").filter(h=>h!==correctChar);a.sort(()=>Math.random()-.5);currentChoices=[correctChar,a[0],a[1]].sort(()=>Math.random()-.5);perbaruiTampilanTombolKuis()}
+function perbaruiTampilanTombolKuis(){for(let i=0;i<3;i++){const b=document.getElementById(`choice${i}`),c=currentChoices[i];b.classList.remove("wrong");b.innerText=isUpperCase?c:c.toLowerCase();b.onclick=()=>verifikasiJawabanKuis(c,b)}}
+async function verifikasiJawabanKuis(c,b){if(c===correctChar){const t=document.getElementById(`char-${missingIndex}`);t.classList.remove("blank-slot");t.innerText=isUpperCase?correctChar:correctChar.toLowerCase();t.classList.add("highlight");putarNadaKemenangan();await bunyikanItem(kataSekarang,.9);await jeda(300);jumlahBintang++;starCount.innerText=jumlahBintang;if(jumlahBintang%5===0){celebrationText.innerText=`Luar Biasa! Kamu dapat ${jumlahBintang} Bintang!`;celebrationModal.classList.add("active")}else{await jeda(1000);gantiKata()}}else{b.classList.add("wrong");putarNadaSalah();if(jumlahBintang>0){jumlahBintang--;starCount.innerText=jumlahBintang}setTimeout(()=>b.classList.remove("wrong"),400)}}
+function toggleCase(){isUpperCase=!isUpperCase;btnCaseToggle.innerText=isUpperCase?"[Aa] Huruf: BESAR (KAPITAL)":"[Aa] Huruf: kecil";renderKata(kataSekarang);if(isQuizMode)perbaruiTampilanTombolKuis()}
+function gantiKata(){window.speechSynthesis.cancel();lepasSorot();const daftar=bankKata[selectLength.value];let k;do{k=daftar[Math.floor(Math.random()*daftar.length)]}while(k===kataSekarang&&daftar.length>1);kataSekarang=k;if(isQuizMode){siapkanSoalKuis(k);renderKata(k)}else{missingIndex=-1;renderKata(k)}}
+function setMode(q){isQuizMode=q;if(isAutoPlay)toggleAutoPlay();window.speechSynthesis.cancel();if(q){modeQuiz.classList.add("active");modeLearn.classList.remove("active");learnControls.style.display="none";quizControls.style.display="flex"}else{modeLearn.classList.add("active");modeQuiz.classList.remove("active");learnControls.style.display="flex";quizControls.style.display="none"}gantiKata()}
+function sorot(a){document.querySelectorAll(".char").forEach(e=>e.classList.remove("highlight"));a.forEach(i=>{const e=document.getElementById(`char-${i}`);if(e)e.classList.add("highlight")})} function lepasSorot(){document.querySelectorAll(".char").forEach(e=>e.classList.remove("highlight"))} function jeda(ms){return new Promise(r=>setTimeout(r,ms))}
+function bunyikanItem(teks,rate){return new Promise(resolve=>{const s=new SpeechSynthesisUtterance(teks);s.lang="id-ID";s.rate=rate;if(voices.length===0)voices=window.speechSynthesis.getVoices();const v=voices.find(v=>(v.lang.includes("id")||v.lang.includes("ID"))&&(v.name.includes("Google")||v.name.includes("Indonesian")))||voices.find(v=>v.lang.includes("id")||v.lang.includes("ID"));if(v)s.voice=v;s.onend=resolve;s.onerror=resolve;window.speechSynthesis.speak(s)})}
+function siapkanLangkahEja(kata){const len=kata.length,h=kata.toUpperCase().split("");let l=[];if(len===3)l=[{teks:h[0],highlight:[0]},{teks:abjadId[h[1]]||h[1],highlight:[1]},{teks:abjadId[h[2]]||h[2],highlight:[2]},{teks:h[1]+h[2],highlight:[1,2]},{teks:kata,highlight:[0,1,2]}];else if(len===4)l=[{teks:abjadId[h[0]]||h[0],highlight:[0]},{teks:abjadId[h[1]]||h[1],highlight:[1]},{teks:h[0]+h[1],highlight:[0,1]},{teks:abjadId[h[2]]||h[2],highlight:[2]},{teks:abjadId[h[3]]||h[3],highlight:[3]},{teks:h[2]+h[3],highlight:[2,3]},{teks:kata,highlight:[0,1,2,3]}];else if(len===5)l=[{teks:abjadId[h[0]]||h[0],highlight:[0]},{teks:abjadId[h[1]]||h[1],highlight:[1]},{teks:h[0]+h[1],highlight:[0,1]},{teks:abjadId[h[2]]||h[2],highlight:[2]},{teks:abjadId[h[3]]||h[3],highlight:[3]},{teks:h[2]+h[3],highlight:[2,3]},{teks:abjadId[h[4]]||h[4],highlight:[4]},{teks:h[2]+h[3]+h[4],highlight:[2,3,4]},{teks:kata,highlight:[0,1,2,3,4]}];else if(len===6)l=[{teks:abjadId[h[0]]||h[0],highlight:[0]},{teks:abjadId[h[1]]||h[1],highlight:[1]},{teks:h[0]+h[1],highlight:[0,1]},{teks:abjadId[h[2]]||h[2],highlight:[2]},{teks:abjadId[h[3]]||h[3],highlight:[3]},{teks:h[2]+h[3],highlight:[2,3]},{teks:abjadId[h[4]]||h[4],highlight:[4]},{teks:abjadId[h[5]]||h[5],highlight:[5]},{teks:h[4]+h[5],highlight:[4,5]},{teks:kata,highlight:[0,1,2,3,4,5]}];return l}
+async function prosesEjaSatuKata(){const mode=selectSpeed.value;let rate=.85,jedaAntar=200;if(mode==="slow"){rate=.65;jedaAntar=350}else if(mode==="fast"){rate=1.25;jedaAntar=100}const l=siapkanLangkahEja(kataSekarang);for(let i=0;i<l.length;i++){if(!isSpeaking)break;sorot(l[i].highlight);await bunyikanItem(l[i].teks,rate);await jeda(jedaAntar)}await jeda(200);lepasSorot();if(isSpeaking){iconBox.classList.add("revealed");putarNadaKemenangan();if(!kataSudahDinilai){jumlahBintang++;starCount.innerText=jumlahBintang;kataSudahDinilai=true;if(jumlahBintang%5===0){await jeda(400);celebrationText.innerText=`Kamu berhasil mengumpulkan ${jumlahBintang} Bintang!`;celebrationModal.classList.add("active");return "MODAL_OPEN"}}}return "SUCCESS"}
+async function mulaiEjaManual(){if(isSpeaking)return;isSpeaking=true;btnSpeak.disabled=true;btnNext.disabled=true;btnOpenSettings.disabled=true;window.speechSynthesis.cancel();await prosesEjaSatuKata();isSpeaking=false;btnSpeak.disabled=false;btnNext.disabled=false;btnOpenSettings.disabled=false}
+async function toggleAutoPlay(){if(isAutoPlay){isAutoPlay=false;isSpeaking=false;window.speechSynthesis.cancel();lepasSorot();btnAutoPlay.classList.remove("active");btnAutoPlay.innerText="Putar Otomatis";btnSpeak.disabled=false;btnNext.disabled=false;btnOpenSettings.disabled=false}else{isAutoPlay=true;btnAutoPlay.classList.add("active");btnAutoPlay.innerText="Hentikan Otomatis";btnSpeak.disabled=true;btnNext.disabled=true;btnOpenSettings.disabled=true;while(isAutoPlay){isSpeaking=true;const hasil=await prosesEjaSatuKata();if(!isAutoPlay)break;if(hasil==="MODAL_OPEN")break;await jeda(2500);if(!isAutoPlay)break;gantiKata();await jeda(500)}}}
+btnOpenSettings.addEventListener("click",()=>settingsModal.classList.add("active"));btnCloseSettings.addEventListener("click",()=>settingsModal.classList.remove("active"));btnContinue.addEventListener("click",()=>{celebrationModal.classList.remove("active");gantiKata();if(isAutoPlay)toggleAutoPlay()});btnNext.addEventListener("click",()=>{if(isAutoPlay)toggleAutoPlay();gantiKata()});btnSpeak.addEventListener("click",mulaiEjaManual);btnAutoPlay.addEventListener("click",toggleAutoPlay);btnCaseToggle.addEventListener("click",toggleCase);modeLearn.addEventListener("click",()=>setMode(false));modeQuiz.addEventListener("click",()=>setMode(true));selectLength.addEventListener("change",()=>{if(isAutoPlay)toggleAutoPlay();gantiKata()});gantiKata();
+</script></body></html>
